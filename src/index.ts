@@ -13,7 +13,7 @@ import * as http from 'http';
 let app = express();
 let server = http.createServer(app);
 
-let io: SocketIO.Server = require('socket.io')(server);
+let io: SocketIO.Server = require('socket.io')(server, { cors: { origin: true, credentials: true }, allowEIO3: true });
 
 // Routes
 import { router as userRouter } from './routes/user';
@@ -142,6 +142,11 @@ async function main() {
       // Leave channel
       socket.leave(data.channelId);
       const userIdsInChannel: {}[] = [];
+
+      if(io.in(data.channelId).clients == null) {
+        return;
+      }
+
       // Emit to everyone in that room that user left voice
       io.in(data.channelId).clients((error: any, socketClients: any) => {
         socketClients.forEach((socketClientId: any) => {

@@ -4,10 +4,10 @@ let util = require('util');
 
 // Env vars
 dotenv.config();
-const host = process.env.MYSQL_URL;
-const user = process.env.MYSQL_USER;
-const password = process.env.MYSQL_PASS;
-const database = process.env.MYSQL_DB;
+const host = "localhost";
+const user = "root";
+const password = "password";
+const database = "discord";
 
 // Setup Mysql
 export var connection = mysql.createPool({ host, user, password, database });
